@@ -3,6 +3,7 @@ import PUBLIC_METHOD from "../../../method/method.js";
 import METHOD from "../method/map.child.method.js";
 import PARAM from "../param/map.child.param.js";
 import { CONFIG } from "../../../../../config.js";
+
 // the rectangles that make up the map
 export default class {
   constructor({ group, map, parent, proxy }) {
@@ -56,21 +57,70 @@ export default class {
   }
   // plane
   createPlaneMesh() {
-    const geometry = this.createPlaneGeometry();
-    const material = this.createPlaneMaterial();
-    return new THREE.InstancedMesh(
-      geometry,
-      material,
+    const terrainGometry = this.createTerrain();
+    const outline = this.createOutline(terrainGometry);
+
+    const terrainMaterial = this.createPlaneMaterial();
+
+    const mesh = new THREE.InstancedMesh(
+      terrainGometry,
+      terrainMaterial,
       this.map.coordinates.length
     );
+
+    mesh.add(outline);
+
+    return mesh;
+    // const geometry = this.createPlaneGeometry();
+    // const material = this.createPlaneMaterial();
+    //   return new THREE.InstancedMesh(
+    //     geometry,
+    //     material,
+    //     this.map.coordinates.length
+    //   );
   }
-  createPlaneGeometry() {
+  createPlaneGeometry() {}
+
+  createOutlinedTerrainGeometry() {
+    const terrain = this.createTerrain();
+    const outlines = this.createOutline(terrain);
+
+    const combinedGeometry = new THREE.BufferGeometry();
+    combinedGeometry.merge(terrain, outlines);
+
+    return combinedGeometry;
+  }
+
+  createTerrain() {
     return new THREE.BoxGeometry(
       CONFIG.terrain.dimensions.width,
       CONFIG.terrain.dimensions.length,
       CONFIG.terrain.dimensions.maxHeight
     );
   }
+
+  createOutline(objGeometry) {
+    var geo = new THREE.EdgesGeometry(objGeometry);
+    var mat = new THREE.LineBasicMaterial({
+      color: CONFIG.terrain.outlineColor,
+      linewidth: 10,
+    });
+    // var mat = this.createOutlineMaterial();
+    var wireframe = new THREE.LineSegments(geo, mat);
+    return wireframe;
+  }
+
+  createOutlineMaterial() {
+    return new THREE.MeshBasicMaterial({
+      color: CONFIG.terrain.outlineColor,
+      transparent: false,
+      opacity: 1.0,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+  }
+
   createPlaneMaterial() {
     return new THREE.MeshBasicMaterial({
       color: CONFIG.terrain.finalColor,
