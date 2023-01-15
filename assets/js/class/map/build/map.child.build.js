@@ -2,7 +2,8 @@ import * as THREE from "../../../lib/three.module.js";
 import PUBLIC_METHOD from "../../../method/method.js";
 import METHOD from "../method/map.child.method.js";
 import PARAM from "../param/map.child.param.js";
-
+import { CONFIG } from "../../../../../config.js";
+// the rectangles that make up the map
 export default class {
   constructor({ group, map, parent, proxy }) {
     this.map = map;
@@ -64,7 +65,11 @@ export default class {
     );
   }
   createPlaneGeometry() {
-    return new THREE.BoxGeometry(PARAM.size, PARAM.size, PARAM.size);
+    return new THREE.BoxGeometry(
+      CONFIG.terrain.dimensions.width,
+      CONFIG.terrain.dimensions.length,
+      CONFIG.terrain.dimensions.maxHeight
+    );
   }
   createPlaneMaterial() {
     return new THREE.MeshBasicMaterial({
@@ -92,10 +97,13 @@ export default class {
         y * 0.01,
         window.performance.now() * 0.001
       );
+      // the height of each rectangle changes each time
       const scale = PUBLIC_METHOD.normalize(noise, 0.1, 4, -1, 1);
+      // TODO: transparency of PLANE IS HERE
       const color =
         Math.floor(PUBLIC_METHOD.normalize(noise, 3, 35, -1, 1)) *
-        (Math.random() > 0.9 ? 2 : 1);
+        (Math.random() > 0.9 ? 2 : 1) *
+        CONFIG.terrain.opacity;
 
       matrix.multiply(new THREE.Matrix4().makeTranslation(x, y, 0));
       matrix.multiply(new THREE.Matrix4().makeScale(1, 1, scale));
@@ -104,7 +112,7 @@ export default class {
       );
 
       plane.setMatrixAt(i, matrix);
-      plane.setColorAt(i, new THREE.Color(`hsl(186, 100%, 0%)`));
+      plane.setColorAt(i, new THREE.Color(CONFIG.terrain.initialColor));
       plane.colors.push(color);
 
       // if(i === 80 || i === 503) plane.setColorAt(i, new THREE.Color(0xffffff))

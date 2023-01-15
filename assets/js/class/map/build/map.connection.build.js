@@ -2,6 +2,7 @@ import * as THREE from "../../../lib/three.module.js";
 import METHOD from "../method/map.connection.method.js";
 import CHILD_PARAM from "../param/map.child.param.js";
 
+// trajectories
 export default class {
   constructor({ group, map, parent, proxy }) {
     this.param = {
