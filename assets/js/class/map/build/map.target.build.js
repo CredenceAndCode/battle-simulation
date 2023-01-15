@@ -1,7 +1,8 @@
 import * as THREE from "../../../lib/three.module.js";
 import METHOD from "../method/map.target.method.js";
 import CHILD_PARAM from "../param/map.child.param.js";
-
+import { CONFIG } from "../../../../../config.js";
+// planes
 export default class {
   constructor({ group, camera }) {
     this.param = {
@@ -9,18 +10,18 @@ export default class {
       size: 25,
       z: 30,
       width: 600,
-      height: 600,
+      height: 200 + Math.random() * 2000,
       bound: 300,
-      count: 12,
+      count: CONFIG.planes.count,
       gap: 0.005,
-      lineOpacity: 0.5,
+      lineOpacity: 1,
       moveGroupOpacity: [
         1, // triangle
         0.25, // vertical line
         1, // plane
         0, // effect
       ],
-      length: 100,
+      length: 50,
       planeWidth: ~~(1920 * 0.02),
       planeHeight: ~~(1080 * 0.03),
       font: "OpenSansRegular",
@@ -234,7 +235,7 @@ export default class {
 
     line.geometry.dispose();
     line.geometry = this.createLineGeometry({ x, y });
-    line.material.opacity = this.param.lineOpacity;
+    line.material.opacity = CONFIG.planes.exhaustOpacity;
   }
   updateOpenTween(moveGroup, { opacity }) {
     moveGroup.children.forEach(

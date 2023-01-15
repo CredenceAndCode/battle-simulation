@@ -16,6 +16,7 @@ import US from "../../data/us_points.min.js";
 import CN from "../../data/cn_points.min.js";
 import UK from "../../data/uk_points.min.js";
 import RU from "../../data/ru_points.min.js";
+import { CONFIG } from "../../../../config.js";
 
 export default class {
   constructor() {
@@ -40,18 +41,18 @@ export default class {
     this.build = new THREE.Group();
 
     this.map = {
-      jp: JP,
-      kr: KR,
+      // jp: JP,
+      // kr: KR,
       us: US,
-      cn: CN,
-      uk: UK,
-      ru: RU,
+      // cn: CN,
+      // uk: UK,
+      // ru: RU,
     };
     this.mapIndex = 0;
 
     this.play = true;
 
-    this.timer = 10000;
+    this.timer = CONFIG.timer * 1000;
     this.currentTime = window.performance.now();
     this.oldTime = window.performance.now();
     this.playInterval = true;
@@ -250,7 +251,7 @@ export default class {
   rotationGroup() {
     for (const group in this.group) {
       // if(group === 'grid') continue
-      this.group[group].rotation.z += 0.002;
+      this.group[group].rotation.z += 0.002 * CONFIG.camera.rotationSpeedFactor;
     }
   }
 

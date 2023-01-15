@@ -58,13 +58,12 @@ export default class {
   // plane
   createPlaneMesh() {
     const terrainGeometry = this.createTerrain();
-    //set the material index of each face so a merge knows which material to apply
-    const outlineGeometry = this.createOutline(terrainGeometry);
+    // const outlineGeometry = this.createOutline(terrainGeometry);
 
     const terrainMaterial = this.createPlaneMaterial();
-    const outlineMaterial = this.createOutlineMaterial();
+    // const outlineMaterial = this.createOutlineMaterial();
 
-    terrainGeometry.merge(outlineGeometry);
+    // terrainGeometry.merge(outlineGeometry);
 
     const mesh = new THREE.InstancedMesh(
       terrainGeometry,

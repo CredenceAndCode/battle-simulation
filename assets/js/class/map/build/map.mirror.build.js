@@ -1,11 +1,12 @@
 import * as THREE from "../../../lib/three.module.js";
 import { Reflector } from "../../../lib/Reflector.js";
 import CHILD_PARAM from "../param/map.child.param.js";
+import { CONFIG } from "../../../../../config.js";
 
 export default class {
   constructor({ group, size }) {
     this.param = {
-      opacity: 0.25,
+      opacity: CONFIG.reflection.opacity,
     };
 
     this.size = size;

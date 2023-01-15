@@ -1,17 +1,18 @@
 import * as THREE from "../../../lib/three.module.js";
 import METHOD from "../method/map.connection.method.js";
 import CHILD_PARAM from "../param/map.child.param.js";
+import { CONFIG } from "../../../../../config.js";
 
 // trajectories
 export default class {
   constructor({ group, map, parent, proxy }) {
     this.param = {
-      color: 0x32eaff,
+      color: CONFIG.missiles.arcColor,
       seg: 360,
-      count: 8,
+      count: CONFIG.missiles.count,
       radius: 6,
-      z: 50,
-      lineTime: 1500,
+      z: 20, // TODO this should automatically be set
+      lineTime: 1000 * CONFIG.missiles.speedScale,
     };
 
     this.map = map;
@@ -109,11 +110,11 @@ export default class {
     return new THREE.Mesh(geometry, material);
   }
   createCircleGeometry() {
-    return new THREE.CircleGeometry(this.param.radius, 16);
+    return new THREE.CircleGeometry(30 * CONFIG.missiles.impactSizeScale, 16);
   }
   createCircleMaterial() {
     return new THREE.MeshBasicMaterial({
-      color: this.param.color,
+      color: CONFIG.missiles.impactColor,
       side: THREE.DoubleSide,
       transparent: true,
       depthWrite: false,
