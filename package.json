@@ -1,0 +1,24 @@
+{
+  "name": "battle-simulation",
+  "version": "1.0.0",
+  "description": "https://bemuse01.github.io/test-3d-map/",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CredenceAndCode/battle-simulation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CredenceAndCode/battle-simulation/issues"
+  },
+  "homepage": "https://github.com/CredenceAndCode/battle-simulation#readme"
+}

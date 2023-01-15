@@ -1,3 +1,3 @@
 export default {
-    rotation: -65
-}
+  rotation: -65,
+};

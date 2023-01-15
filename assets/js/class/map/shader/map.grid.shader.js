@@ -1,5 +1,5 @@
 export default {
-    vertex: `
+  vertex: `
         varying vec3 vPosition;
 
         void main(){
@@ -8,7 +8,7 @@ export default {
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
     `,
-    fragment: `
+  fragment: `
         uniform vec3 uColor;
         uniform float uDist;
         uniform float uOpacity;
@@ -21,5 +21,5 @@ export default {
             float verOpacity = (1.0 - distance(vPosition.z, 0.0) / uZdist) * uOpacity;
             gl_FragColor = vec4(uColor, horOpacity * verOpacity);
         }
-    `
-}
+    `,
+};

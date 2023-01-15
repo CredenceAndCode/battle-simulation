@@ -1,20 +1,20 @@
 export default {
-    executeNormalizing(){
-        return `
+  executeNormalizing() {
+    return `
             float executeNormalizing(float x, float a, float b, float min, float max){
                 return (b - a) * (x - min) / (max - min) + a;
             }
-        `
-    },
-    getTheta(){
-        return `
+        `;
+  },
+  getTheta() {
+    return `
             float getTheta(vec2 pos){
                 return atan(pos.y, pos.x);
             }
-        `
-    },
-    getSphereCoord(){
-        return `
+        `;
+  },
+  getSphereCoord() {
+    return `
             vec3 getSphereCoord(float lat, float lon, float radius){
                 float phi = (90.0 - lat) * ${RADIAN};
                 float theta = (180.0 - lon) * ${RADIAN};
@@ -23,26 +23,26 @@ export default {
                 float z = radius * sin(phi) * sin(theta);
                 return vec3(x, y, z);
             }
-        `
-    },
-    getCircleCoord(){
-        return `
+        `;
+  },
+  getCircleCoord() {
+    return `
             vec2 getCircleCoord(float deg, float radius){
                 float x = radius * cos(deg);
                 float y = radius * sin(deg);
                 return vec2(x, y);
             }
-        `
-    },
-    rand(){
-        return `
+        `;
+  },
+  rand() {
+    return `
             float rand(vec2 co){
                 return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
             }
-        `
-    },
-    snoise3D(){
-        return `
+        `;
+  },
+  snoise3D() {
+    return `
             vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
             vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
             
@@ -105,6 +105,6 @@ export default {
                 m = m * m;
                 return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
             }
-        `
-    }
-}
+        `;
+  },
+};

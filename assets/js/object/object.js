@@ -1,1 +1,1 @@
-const OBJECT = {}
+const OBJECT = {};

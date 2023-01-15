@@ -1,4 +1,4 @@
-export default class{
+export default class {
   constructor(xs, ys) {
     this.xs = xs;
     this.ys = ys;
@@ -77,7 +77,7 @@ export default class{
       t * (1 - t) * (a * (1 - t) + b * t);
     return q;
   }
-};
+}
 
 function solve(A, ks) {
   const m = A.length;
