@@ -73,7 +73,7 @@ export default class {
   }
   createPlaneMaterial() {
     return new THREE.MeshBasicMaterial({
-      // color: PARAM.color,
+      color: CONFIG.terrain.finalColor,
       transparent: true,
       opacity: 1.0,
       depthWrite: false,
@@ -99,7 +99,7 @@ export default class {
       );
       // the height of each rectangle changes each time
       const scale = PUBLIC_METHOD.normalize(noise, 0.1, 4, -1, 1);
-      // TODO: transparency of PLANE IS HERE
+
       const color =
         Math.floor(PUBLIC_METHOD.normalize(noise, 3, 35, -1, 1)) *
         (Math.random() > 0.9 ? 2 : 1) *

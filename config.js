@@ -7,5 +7,6 @@ export const CONFIG = {
     },
     opacity: 1,
     initialColor: "#6cff1d",
+    finalColor: "#1DFF5B",
   },
 };
