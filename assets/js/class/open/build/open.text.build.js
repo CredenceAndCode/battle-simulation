@@ -13,14 +13,14 @@ export default class {
     this.loadIdx = 0;
 
     this.texts = [
-      "Checking authority...",
-      "Intializing system...",
-      "Optimizing system...",
-      "Checking data...",
-      "Accessing data...",
-      "Synchronizing data...",
-      "Loading data...",
-      "Waiting...",
+      // "Checking authority...",
+      // "Intializing system...",
+      // "Optimizing system...",
+      // "Checking data...",
+      // "Accessing data...",
+      // "Synchronizing data...",
+      // "Loading data...",
+      // "Waiting...",
       "Complete.",
     ];
 
