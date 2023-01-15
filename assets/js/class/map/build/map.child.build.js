@@ -57,27 +57,22 @@ export default class {
   }
   // plane
   createPlaneMesh() {
-    const terrainGometry = this.createTerrain();
-    const outline = this.createOutline(terrainGometry);
+    const terrainGeometry = this.createTerrain();
+    //set the material index of each face so a merge knows which material to apply
+    const outlineGeometry = this.createOutline(terrainGeometry);
 
     const terrainMaterial = this.createPlaneMaterial();
+    const outlineMaterial = this.createOutlineMaterial();
+
+    terrainGeometry.merge(outlineGeometry);
 
     const mesh = new THREE.InstancedMesh(
-      terrainGometry,
+      terrainGeometry,
       terrainMaterial,
       this.map.coordinates.length
     );
 
-    mesh.add(outline);
-
     return mesh;
-    // const geometry = this.createPlaneGeometry();
-    // const material = this.createPlaneMaterial();
-    //   return new THREE.InstancedMesh(
-    //     geometry,
-    //     material,
-    //     this.map.coordinates.length
-    //   );
   }
   createPlaneGeometry() {}
 
@@ -100,24 +95,22 @@ export default class {
   }
 
   createOutline(objGeometry) {
-    var geo = new THREE.EdgesGeometry(objGeometry);
-    var mat = new THREE.LineBasicMaterial({
-      color: CONFIG.terrain.outlineColor,
-      linewidth: 10,
-    });
-    // var mat = this.createOutlineMaterial();
-    var wireframe = new THREE.LineSegments(geo, mat);
-    return wireframe;
+    return new THREE.WireframeGeometry(objGeometry);
   }
 
   createOutlineMaterial() {
-    return new THREE.MeshBasicMaterial({
+    // return new THREE.MeshBasicMaterial({
+    //   color: CONFIG.terrain.outlineColor,
+    //   transparent: false,
+    //   opacity: 1.0,
+    //   depthWrite: false,
+    //   depthTest: false,
+    //   blending: THREE.AdditiveBlending,
+    // });
+
+    return new THREE.LineBasicMaterial({
       color: CONFIG.terrain.outlineColor,
-      transparent: false,
-      opacity: 1.0,
-      depthWrite: false,
-      depthTest: false,
-      blending: THREE.AdditiveBlending,
+      linewidth: 10,
     });
   }
 
