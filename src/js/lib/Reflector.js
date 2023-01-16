@@ -6,7 +6,7 @@ import {
   Mesh,
   PerspectiveCamera,
   Plane,
-  RGBFormat,
+  RGBAFormat,
   ShaderMaterial,
   UniformsUtils,
   Vector3,
@@ -53,7 +53,7 @@ class Reflector extends Mesh {
     const parameters = {
       minFilter: LinearFilter,
       magFilter: LinearFilter,
-      format: RGBFormat,
+      format: RGBAFormat,
     };
 
     const renderTarget = new WebGLRenderTarget(

@@ -1,8 +1,14 @@
 import * as THREE from "three";
 import { RATIO } from "../../const/const.js";
 export default class {
+  wrap: HTMLElement;
+  width: any;
+  height: any;
+  scene: THREE.Scene | undefined;
+  renderer: THREE.WebGLRenderer | undefined;
+
   constructor() {
-    this.wrap = document.getElementById("wrap");
+    this.wrap = document.getElementById("wrap")!;
 
     const { width, height } = this.wrap.getBoundingClientRect();
     this.width = width;
@@ -18,7 +24,7 @@ export default class {
 
   // create
   create() {
-    const canvas = document.querySelector("#canvas");
+    const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 
     this.scene = new THREE.Scene();
 
@@ -39,9 +45,9 @@ export default class {
     this.render();
   }
   render() {
-    this.renderer.setScissorTest(false);
-    this.renderer.clear(true, true);
-    this.renderer.setScissorTest(true);
+    this.renderer!.setScissorTest(false);
+    this.renderer!.clear(true, true);
+    this.renderer!.setScissorTest(true);
   }
 
   // resize
@@ -51,6 +57,6 @@ export default class {
     this.width = width;
     this.height = height;
 
-    this.renderer.setSize(this.width, this.height);
+    this.renderer!.setSize(this.width, this.height);
   }
 }

@@ -89,7 +89,8 @@ export default class {
       this.param.near,
       this.param.far
     );
-    this.camera.position.z = 20;
+
+    this.camera.position.z = this.param.pos;
 
     this.size = {
       el: {
