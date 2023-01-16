@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "https://bemuse01.github.io/test-3d-map/",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "copyfiles": "^2.4.1",
+    "simplex-noise": "^4.0.1",
+    "three": "^0.148.0",
+    "vue": "^3.2.45"
+  },
   "devDependencies": {
+    "typescript": "^4.9.4",
     "prettier": "^2.8.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && npm run copyFiles && tsc -w",
+    "copyFiles": "copyfiles index.html assets/css/* assets/font/* assets/js/lib/*.min.js output",
+    "start": "jekyll serve --livereload --force_polling --source output",
     "format": "prettier --write ."
   },
   "repository": {
