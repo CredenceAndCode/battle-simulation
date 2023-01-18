@@ -42,6 +42,7 @@ export default class {
 
   // render
   animate() {
+    console.log("render");
     this.render();
   }
   render() {
