@@ -10,17 +10,60 @@ import CONNECTION from "./build/map.connection.build.js";
 import GRID from "./build/map.grid.build.js";
 import TARGET from "./build/map.target.build.js";
 
+import { isAllTrue } from "../../utils.js";
 import { RADIAN } from "../../const/const.js";
-
-import JP from "../../data/jp_points.min.js";
-import KR from "../../data/kr_points.min.js";
-import US from "../../data/us_points.min.js";
-import CN from "../../data/cn_points.min.js";
-import UK from "../../data/uk_points.min.js";
-import RU from "../../data/ru_points.min.js";
+import APP from "../app/app";
+import { maps } from "../../data/maps";
 import { CONFIG } from "../../../config.js";
 
+interface AnimateMapProps {
+  app: APP;
+}
+
+interface SingleMap {
+  one_pixel_size: number;
+  image_width: string;
+  image_height: string;
+  coordinates: Coordinates[];
+}
+
+interface Coordinates {
+  ox: string;
+  oy: string;
+  rx: string;
+  ry: string;
+}
+
+interface modules {
+  [key: string]:
+    | typeof MIRROR
+    | typeof CHILD
+    | typeof EPICENTER
+    | typeof RADAR
+    | typeof CONNECTION
+    | typeof GRID
+    | typeof TARGET;
+}
+
 export default class {
+  param: { fov: number; near: number; far: number; pos: number };
+  modules: modules;
+  group: { [key: string]: any } = {};
+  comp: { [key: string]: any } = {};
+  build: THREE.Group;
+  map: { [key: string]: SingleMap };
+  mapIndex: number;
+  play: boolean;
+  timer: number;
+  currentTime: number;
+  oldTime: number;
+  playInterval: boolean;
+  element: any;
+  scene: THREE.Scene | undefined;
+  camera: THREE.PerspectiveCamera | undefined;
+  size: { el: { w: any; h: any }; obj: { w: number; h: number } } | undefined;
+  proxy: { [key: string | symbol]: boolean } | undefined;
+
   constructor() {
     this.param = {
       fov: 60,
@@ -42,14 +85,7 @@ export default class {
     this.comp = {};
     this.build = new THREE.Group();
 
-    this.map = {
-      // jp: JP,
-      // kr: KR,
-      us: US,
-      // cn: CN,
-      // uk: UK,
-      // ru: RU,
-    };
+    this.map = maps;
     this.mapIndex = 0;
 
     this.play = true;
@@ -106,7 +142,7 @@ export default class {
   initProxy() {
     const self = this;
 
-    const proxyObj = {
+    const proxyObj: { [key: string | symbol]: boolean } = {
       play: false,
       child: false,
       epicenter: false,
@@ -115,9 +151,6 @@ export default class {
     };
 
     this.proxy = new Proxy(proxyObj, {
-      isAllTrue(obj) {
-        return Object.keys(obj).every((key) => obj[key] === true);
-      },
       set(obj, prop, value) {
         obj[prop] = value;
 
@@ -134,7 +167,7 @@ export default class {
         }
 
         // disappear current map and display new map
-        if (this.isAllTrue(obj)) {
+        if (isAllTrue(obj)) {
           self.setProxyToFalse();
           self.setMap();
           self.executeClose();
@@ -149,7 +182,7 @@ export default class {
   add() {
     for (let i in this.group) this.build.add(this.group[i]);
 
-    this.scene.add(this.build);
+    this.scene!.add(this.build);
   }
 
   // create
@@ -224,26 +257,26 @@ export default class {
   }
 
   // animate
-  animate({ app }) {
-    this.render(app);
+  animate(props: AnimateMapProps) {
+    this.render(props.app);
     this.animateObject();
     this.rotationGroup();
     this.intervalStopTween();
   }
-  render(app) {
+  render(app: APP) {
     const rect = this.element.getBoundingClientRect();
     const width = rect.right - rect.left;
     const height = rect.bottom - rect.top;
     const left = rect.left;
-    const bottom = app.renderer.domElement.clientHeight - rect.bottom;
+    const bottom = app.renderer!.domElement.clientHeight - rect.bottom;
 
     // app.renderer.clear()
 
-    app.renderer.setScissor(left, bottom, width, height);
-    app.renderer.setViewport(left, bottom, width, height);
+    app.renderer!.setScissor(left, bottom, width, height);
+    app.renderer!.setViewport(left, bottom, width, height);
 
-    this.camera.lookAt(this.scene.position);
-    app.renderer.render(this.scene, this.camera);
+    this.camera!.lookAt(this.scene!.position);
+    app.renderer!.render(this.scene!, this.camera!);
   }
   animateObject() {
     for (let i in this.comp) {
@@ -264,8 +297,8 @@ export default class {
     const width = rect.right - rect.left;
     const height = rect.bottom - rect.top;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    this.camera!.aspect = width / height;
+    this.camera!.updateProjectionMatrix();
 
     this.size = {
       el: {
