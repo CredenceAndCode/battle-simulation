@@ -2,7 +2,7 @@ import * as THREE from "three";
 import PARAM from "./param/map.param.js";
 import PUBLIC_METHOD from "../../method/method.js";
 
-import CHILD from "./build/map.child.build.js";
+import CHILD from "./build/map.child.build";
 import MIRROR from "./build/map.mirror.build.js";
 import EPICENTER from "./build/map.epicenter.build.js";
 import RADAR from "./build/map.radar.build.js";
@@ -10,7 +10,7 @@ import CONNECTION from "./build/map.connection.build.js";
 import GRID from "./build/map.grid.build.js";
 import TARGET from "./build/map.target.build.js";
 
-import { isAllTrue } from "../../utils.js";
+import { isAllTrue } from "../../utils";
 import { RADIAN } from "../../const/const.js";
 import APP from "../app/app";
 import { maps } from "../../data/maps";
@@ -48,7 +48,7 @@ interface modules {
 export default class {
   param: { fov: number; near: number; far: number; pos: number };
   modules: modules;
-  group: { [key: string]: any } = {};
+  group: { [key: string]: THREE.Group } = {};
   comp: { [key: string]: any } = {};
   build: THREE.Group;
   map: { [key: string]: SingleMap };
@@ -181,7 +181,6 @@ export default class {
   // add
   add() {
     for (let i in this.group) this.build.add(this.group[i]);
-
     this.scene!.add(this.build);
   }
 

@@ -1,5 +1,5 @@
 import APP from "./class/app/app";
-import MAP from "./class/map/map.js";
+import MAP from "./class/map/map";
 const TWEEN = require("tween.js");
 
 const app = new APP();
