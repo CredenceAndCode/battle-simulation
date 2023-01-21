@@ -7,7 +7,7 @@ import MIRROR from "./build/map.mirror.build.js";
 import EPICENTER from "./build/map.epicenter.build.js";
 import RADAR from "./build/map.radar.build.js";
 import CONNECTION from "./build/map.connection.build.js";
-import GRID from "./build/map.grid.build.js";
+import GRID from "./build/map.grid.build";
 import TARGET from "./build/map.target.build.js";
 
 import { isAllTrue } from "../../utils";

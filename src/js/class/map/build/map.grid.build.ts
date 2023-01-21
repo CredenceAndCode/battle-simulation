@@ -12,7 +12,8 @@ export default class {
   };
   wrapper: THREE.Group | undefined;
 
-  constructor(group: THREE.Group) {
+  constructor(params: any) {
+    const group: THREE.Group = params.group;
     this.param = {
       color: 0x32eaff,
       width: 1600,
@@ -64,12 +65,12 @@ export default class {
     this.wrapper.add(positionGroup);
     group.add(this.wrapper);
   }
-  createMesh(position: any) {
+  createMesh(position: any): THREE.Line {
     const geometry = this.createGeometry(position);
     const material = this.createMaterial();
     return new THREE.Line(geometry, material);
   }
-  createGeometry(position: any) {
+  createGeometry(position: any): THREE.BufferGeometry {
     const geometry = new THREE.BufferGeometry();
 
     geometry.setAttribute(
@@ -79,7 +80,7 @@ export default class {
 
     return geometry;
   }
-  createMaterial() {
+  createMaterial(): THREE.ShaderMaterial {
     // return new THREE.LineBasicMaterial({
     //     color: this.param.color,
     //     transparent: true,
